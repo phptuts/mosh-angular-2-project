@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-md-12">
+            <h1>Posts</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <select class="form-control" #userList (change)="onUserSelected(userList.value)">
+            <option value="">Nothing Selected</option>
+            <option *ngFor="let user of users" value="{{ user.id }}" >{{ user.name }}</option>
+        </select>
+        <pagination (pageSelectedEvent)="changePage($event)" [pageSize]="pageSize" [items]="posts"></pagination>
+        <spinner [visible]="isLoading"></spinner>
+        <ul *ngIf="!isLoading" class="list-group posts">
+            <li 
+                *ngFor="let post of items"
+                (click)="selectPost(post)" 
+                class="list-group-item"
+                [class.active]="selectedPost && selectedPost.id == post.id"
+                >{{ post.title }}</li>
+        </ul>
+    </div>
+
+    <div class="col-md-6" *ngIf="selectedPost">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ selectedPost.title }}</h3>
+            </div>
+            <div class="panel-body">
+                {{ selectedPost.body }}
+            </div>
+        </div>
+
+        <spinner [visible]="isLoadingComments"></spinner>
+       <div *ngFor="let comment of selectedPost.comments" class="media">
+        <div class="media-left media-middle">
+            <a href="#">
+            <img class="media-object" src="http://lorempixel.com/80/80/people?random={{ comment.id }}" >
+            </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">{{ comment.title }}</h4>
+            {{ comment.body }}
+        </div>
+        </div>
+
+    </div>
+</div>

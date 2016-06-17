@@ -1,0 +1,101 @@
+<h1>{{ isNew ? "Add" : "Edit" }} Users</h1>
+
+<form [ngFormModel]="addUserForm" #user="ngForm" >
+    <fieldset ngControlGroup="user">
+        <legend>User</legend>
+        <div class="form-group" [class.has-error]="!userName.valid && userName.touched">
+            <label for="name">Name</label>
+            <input 
+                type="text" 
+                id="name" 
+                class="form-control" 
+                ngControl="name" 
+                #userName="ngForm"  
+                [(ngModel)]="userModel.name"             
+                />
+
+            <p *ngIf="!userName.valid && userName.touched" class="help-text">First name is required.</p>
+        </div>
+        <div class="form-group" [class.has-error]="!email.valid && email.touched">
+            <label for="email">Email</label>
+            <input 
+                type="email"
+                id="email" 
+                class="form-control" 
+                ngControl="email" 
+                #email="ngForm" 
+                [(ngModel)]="userModel.email"             
+                />
+            <p *ngIf="!email.valid && 
+                      email.touched && 
+                      email.errors && 
+                      email.errors.required" class="help-text">Email is required.</p>
+            <p *ngIf="!email.valid && 
+                      email.touched && 
+                      email.errors && 
+                      email.errors.invalidEmail &&
+                      !email.errors.required" class="help-text">Email is not valid.</p>
+
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input 
+                type="text" 
+                id="phone" 
+                class="form-control" 
+                ngControl="phone" 
+                #phone="ngForm" 
+                [(ngModel)]="userModel.phone"             
+                />
+        </div>
+    </fieldset>
+    <fieldset ngControlGroup="address">
+        <legend>Address</legend>
+        <div class="form-group">
+            <label for="street">Street</label>
+            <input 
+                type="text"
+                id="street" 
+                class="form-control"
+                ngControl="street" 
+                #street="ngForm" 
+                [(ngModel)]="userModel.address.street"                             
+                 />
+        </div>
+        <div class="form-group">
+            <label for="suite">Suite</label>
+            <input 
+                type="text" 
+                id="suite" 
+                class="form-control"
+                ngControl="suite" 
+                #suite="ngForm" 
+                [(ngModel)]="userModel.address.suite"                             
+             />
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input 
+                type="text" 
+                id="city" 
+                class="form-control" 
+                ngControl="city" 
+                #city="ngForm"  
+                [(ngModel)]="userModel.address.city"                             
+
+                />
+        </div>
+        <div class="form-group">
+            <label for="zipcode">ZipCode</label>
+            <input 
+                type="text" 
+                id="zipcode" 
+                class="form-control" 
+                ngControl="zipCode" 
+                #zipcode="ngForm"   
+                [(ngModel)]="userModel.address.zipcode"                             
+                />
+        </div>
+    </fieldset>
+    <button type="button" class="btn btn-primary" [disabled]="!addUserForm.valid" (click)="submitUser()" >Submit</button>
+</form>

@@ -1,0 +1,15 @@
+<nav *ngIf="isVisible()">
+  <ul class="pagination">
+    <li [class.disabled]="selectedPage == 1">
+      <a (click)="changePage(selectedPage-1)" aria-label="Previous"  >
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li [class.active]="selectedPage == page"  *ngFor="let page of getPageArray()" (click)="changePage(page)" ><a >{{ page }}</a></li>
+    <li [class.disabled]="selectedPage == getPageArray().length" >
+      <a (click)="changePage(selectedPage+1)"  aria-label="Next" >
+        <span >&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
